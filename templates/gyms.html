@@ -1,41 +1,57 @@
-<a href = "./">Return Home</a> 
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}
+    <a href='/'><button>Return Home</button></a>{% endblock %}
+</head>
 <br>
 <br>
-<div>
-    <table>
-    <caption>Existing Gyms</caption>
-        <thead>
-            <tr>
-                <th>Gym Name</th>
-                <th>Leader</th>
-                <th>Region</th>
-                <th>Primary Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Pewter City Gym</td>
-                <td>Brock</td>
-                <td>Kanto</td>
-                <td>Rock</td>
-            </tr>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-<form>
-    <fieldset>
-        <legend>Add a Gym</legend>
-        <label for="Add Gym">Enter Gym Name</label>
-        <input type="text" id = "Add Gym">
+<body>
+    {% block body %}
+    <div>
+        <table>
+        <caption>Existing Gyms</caption>
+            <thead>
+                <tr>
+                    <th>gymId</th>
+                    <th>gymName</th>
+                    <th>leaderName</th>
+                    <th>regionId</th>
+                    <th>typeId</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>Pewter City Gym</td>
+                    <td>Brock</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tr>
+            </tbody>
+        </table>
         <br>
-        <button type="button">Add</button>
-    </fieldset>   
-    <fieldset>
-        <legend>Search by Gym Name</legend>
-        <label for="Name Search">Enter Gym Name</label>
-        <input type="text" id = "Name Search">
-        <br>
-        <button type="button">Search</button>
-    </fieldset>
-</form>
+    <form>
+        <fieldset>
+            <legend>Add a Gym</legend>
+            <label for="Add Gym">Enter Gym Name</label>
+            <input type="text" id = "Add Gym">
+            <br>
+            <button type="button">Add</button>
+        </fieldset>   
+        <fieldset>
+            <legend>Search by Gym Name</legend>
+            <label for="Name Search">Enter Gym Name</label>
+            <input type="text" id = "Name Search">
+            <br>
+            <button type="button">Search</button>
+        </fieldset>
+    </form>
+    {% endblock %}
+</body>
+</html>
