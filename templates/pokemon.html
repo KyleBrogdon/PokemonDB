@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}
+    <a href='/'><button>Return Home</button></a>{% endblock %}
+</head>
+<body>
+    {% block body %}
+    <br>
+    <br>
+    <div>
+        <table>
+        <caption>Existing Pokemon Information</caption>
+            <thead>
+                <tr>
+                    <th>Pokedex</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Region</th>
+                    <th>Primary Type</th>
+                    <th>Secondary Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>Bulbasaur</td>
+                    <td>Male</td>
+                    <td>Kanto</td>
+                    <td>Grass</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Ivysaur</td>
+                    <td>Male</td>
+                    <td>Kanto</td>
+                    <td>Grass</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Venusaur</td>
+                    <td>Male</td>
+                    <td>Kanto</td>
+                    <td>Grass</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <form>
+        <fieldset>
+            <legend>Add a new Pokemon</legend>
+            <label for="Pokedex Number">Pokedex Number</label>
+            <input type="number" id = "Pokedex Number">
+            <br>
+            <label for="Pokemon Name">Name</label>
+            <input type="text" id = "Pokemon Name">
+            <br>
+            <label for="Pokemon Gender">Gender</label>
+            <select name="Pokemon Gender" id = "Pokemon Gender">
+                <option disabled selected value>  </option>
+                <option value = "Male">Male</option>
+                <option value = "Female">Female</option>
+                <option value = "Unknown">Unknown</option>
+            </select>
+            <br>
+            <label for="Pokemon Region">Region</label>
+            <select name="Pokemon Region" id = "Pokemon Region">
+                <option disabled selected value></option>
+                <option value = "Kanto">Kanto</option>
+                <option value = "Johto">Johto</option>
+                <option value = "Hoenn">Hoenn</option>
+                <option value = "Sinnoh">Sinnoh</option>
+                <option value = "Unova">Unova</option>
+                <option value = "Kalos">Kalos</option>
+                <option value = "Alola">Alola</option>
+                <option value = "Galar">Galar</option>
+            </select>
+            <br>
+            <label for="Primary Type">Primary Type</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
+            <select name="Primary Type" id = "Primary Type">
+                <option disabled selected value>  </option>
+                <option value = "Normal">Normal</option>
+                <option value = "Fire">Fire</option>
+                <option value = "Water">Water</option>
+                <option value = "Grass">Grass</option>
+                <option value = "Electric">Electric</option>
+                <option value = "Ice">Ice</option>
+                <option value = "Fighting">Fighting</option>
+                <option value = "Poison">Poison</option>
+                <option value = "Ground">Ground</option>
+                <option value = "Flying">Flying</option>
+                <option value = "Psychic">Psychic</option>
+                <option value = "Bug">Bug</option>
+                <option value = "Rock">Rock</option>
+                <option value = "Ghost">Ghost</option>
+                <option value = "Dark">Dark</option>
+                <option value = "Dragon">Dragon</option>
+                <option value = "Steel">Steel</option>
+                <option value = "Fairy">Fairy</option>
+            </select>
+            <br>
+            <label for="Secondary Type">Secondary Type</label>
+            <select name="Secondary Type" id = "Secondary Type">
+                <option disabled selected value>  </option>
+                <option value = "None">None</option>
+                <option value = "Normal">Normal</option>
+                <option value = "Fire">Fire</option>
+                <option value = "Water">Water</option>
+                <option value = "Grass">Grass</option>
+                <option value = "Electric">Electric</option>
+                <option value = "Ice">Ice</option>
+                <option value = "Fighting">Fighting</option>
+                <option value = "Poison">Poison</option>
+                <option value = "Ground">Ground</option>
+                <option value = "Flying">Flying</option>
+                <option value = "Psychic">Psychic</option>
+                <option value = "Bug">Bug</option>
+                <option value = "Rock">Rock</option>
+                <option value = "Ghost">Ghost</option>
+                <option value = "Dark">Dark</option>
+                <option value = "Dragon">Dragon</option>
+                <option value = "Steel">Steel</option>
+                <option value = "Fairy">Fairy</option>
+            </select>
+            <br>
+                <fieldset>
+                    <legend>Base Stats</legend>
+                    <label for="Base HP">HP</label>
+                    <input type="number" id = "Base HP" min = "1" max = "255">
+                    <label for="Base ATK">Attack</label>
+                    <input type="number" id = "Base ATK" min = "1" max = "255">
+                    <label for="Base DEF">Defense</label>
+                    <input type="number" id = "Base DEF" min = "1" max = "255">
+                    <label for="Special ATK">Sp. Attack</label>
+                    <input type="number" id = "Special ATK" min = "1" max = "255">
+                    <label for="Special DEF">Sp. Defense</label>
+                    <input type="number" id = "Special DEF" min = "1" max = "255">
+                    <label for="Base SPD">Speed</label>
+                    <input type="number" id = "Base SPD" min = "1" max = "255">
+                </fieldset>
+            <br>
+            <button type="button">Add</button>
+        </fieldset>
+    </form>
+
+    <form>
+        <fieldset>
+            <legend>Update an existing Pokemon</legend>
+            <label for="Pokedex Search">Search by Pokedex Number</label>
+            <input type="number" id = "Pokedex Number">
+            <br>
+            <label for="Name Search">Search by Pokemon Name</label>
+            <input type="text" id = "Name Search">
+            <br>
+            <button type="button">Search</button>
+        </fieldset>
+    </form>
+
+    <form>
+        <fieldset>
+            <legend>Delete an existing Pokemon</legend>
+            <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
+            <input type="number" id = "Pokedex Number">
+            <br>
+            <button type="button">Delete</button>
+        </fieldset>
+    <form>
+    {% endblock %}
+</body>
