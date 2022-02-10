@@ -14,23 +14,19 @@
     <br>
     <div>
         <table>
-        <caption>Pokemon</caption>
+        <caption>PokemonTypes</caption>
             <thead>
                 <tr>
-                    <th>pokemonId</th>
-                    <th>pokemonName</th>
-                    <th>pokemonGender</th>
-                    <th>regionId</th>
                     <th>pokemonTypeId</th>
+                    <th>pokemonId</th>
+                    <th>typeId</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>00103</td>
                     <td>001</td>
-                    <td>Bulbasaur</td>
-                    <td>Male</td>
-                    <td></td>
-                    <td></td>
+                    <td>03</td>
                 </tr>
             </tbody>
         </table>
@@ -38,35 +34,11 @@
     </div>
     <form>
         <fieldset>
-            <legend>Add a new Pokemon</legend>
-            <label for="Pokedex Number">Pokedex Number</label>
+            <legend>Add a new PokemonType Relationship</legend>
+            <label for="pokemonId">pokemonId</label>
             <input type="number" id = "Pokedex Number">
             <br>
-            <label for="Pokemon Name">Name</label>
-            <input type="text" id = "Pokemon Name">
-            <br>
-            <label for="Pokemon Gender">Gender</label>
-            <select name="Pokemon Gender" id = "Pokemon Gender">
-                <option disabled selected value>  </option>
-                <option value = "Male">Male</option>
-                <option value = "Female">Female</option>
-                <option value = "Unknown">Unknown</option>
-            </select>
-            <br>
-            <label for="Pokemon Region">Region</label>
-            <select name="Pokemon Region" id = "Pokemon Region">
-                <option disabled selected value></option>
-                <option value = "Kanto">Kanto</option>
-                <option value = "Johto">Johto</option>
-                <option value = "Hoenn">Hoenn</option>
-                <option value = "Sinnoh">Sinnoh</option>
-                <option value = "Unova">Unova</option>
-                <option value = "Kalos">Kalos</option>
-                <option value = "Alola">Alola</option>
-                <option value = "Galar">Galar</option>
-            </select>
-            <br>
-            <label for="Primary Type">Primary Type</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
+            <label for="Type">Primary Type</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
             <select name="Primary Type" id = "Primary Type">
                 <option disabled selected value>  </option>
                 <option value = "Normal">Normal</option>
@@ -116,25 +88,11 @@
             <button type="button">Add</button>
         </fieldset>
     </form>
-
     <form>
         <fieldset>
-            <legend>Update an existing Pokemon</legend>
-            <label for="Pokedex Search">Search by Pokedex Number</label>
-            <input type="number" id = "Pokedex Number">
-            <br>
-            <label for="Name Search">Search by Pokemon Name</label>
-            <input type="text" id = "Name Search">
-            <br>
-            <button type="button">Search</button>
-        </fieldset>
-    </form>
-
-    <form>
-        <fieldset>
-            <legend>Delete an existing Pokemon</legend>
-            <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
-            <input type="number" id = "Pokedex Number">
+            <legend>Delete an existing PokemonType Relationship</legend>
+            <label for="PokemonType Delete">Enter the pokemonTypeId of the relationship you wish to delete</label>
+            <input type="number" id = "pokemonTypeId">
             <br>
             <button type="button">Delete</button>
         </fieldset>

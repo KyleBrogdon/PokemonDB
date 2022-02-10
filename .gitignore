@@ -1,4 +1,5 @@
 ﻿/.vscode
 /venv
 /.env
+./venv
 /env

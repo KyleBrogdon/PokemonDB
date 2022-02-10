@@ -24,6 +24,10 @@ def index():
 def pokemon():
     return render_template("pokemon.html")
 
+@app.route('/pokemontypes.html')
+def pokemontypes():
+    return render_template("pokemontypes.html")
+
 @app.route('/regions.html')
 def regions():
     return render_template("regions.html")
