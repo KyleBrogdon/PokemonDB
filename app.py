@@ -45,4 +45,4 @@ def stats():
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(port=7123, debug=False)
+    app.run(port=31278, debug=False)
