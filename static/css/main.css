@@ -8,3 +8,14 @@ table, tr, th, td {
     margin-right: auto;
     padding: 5px;
   }
+
+legend {
+    font-weight:  bold;
+    position:  relative;
+}
+
+caption {
+  font-size:  1.4em;
+  font-weight:  bold;
+  position:  relative;
+}
