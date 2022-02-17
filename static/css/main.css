@@ -19,3 +19,11 @@ caption {
   font-weight:  bold;
   position:  relative;
 }
+
+h1 {
+    color: rebeccapurple;
+}
+
+a {
+  font-size:  18;
+}
