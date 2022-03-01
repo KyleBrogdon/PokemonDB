@@ -26,13 +26,16 @@
                 </tr>
             </thead>
             <tbody>
+                {% for r in rows %}
                 <tr>
-                    <td>001</td>
-                    <td>Bulbasaur</td>
-                    <td>Male</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{r.0}}</td>
+                    <td>{{r[1]}}</td>
+                    <td>{{r[2]}}</td>
+                    <td>{{r[3]}}</td>
+                    <td>{{r[4]}}</td>
+                    <td>{{r[5]}}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
         <br>
@@ -197,8 +200,7 @@
             <button type="button">Update</button>
         </fieldset>
     </form>
-
-    <form>
+    <form action = "" method = 'GET'>
         <fieldset>
             <legend>Search for a Pokemon</legend>
             <label for="Pokedex Search">Search by Pokedex Number</label>
@@ -207,7 +209,7 @@
             <label for="Name Search">Search by Pokemon Name</label>
             <input type="text" id = "Name Search">
             <br>
-            <button type="button">Search</button>
+            <button name = 'searchButton' type="button">Search</button>
         </fieldset>
     </form>
 
@@ -217,7 +219,7 @@
             <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
             <input type="number" id = "Pokedex Number">
             <br>
-            <button type="button">Delete</button>
+            <button name = 'deleteButton' type="button">Delete</button>
         </fieldset>
     <form>
     {% endblock %}
