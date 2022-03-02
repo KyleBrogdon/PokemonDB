@@ -37,7 +37,7 @@ SELECT * FROM PokemonTypes;
 
 -- Create a new M:M relationship between Pokemon and Types (max of 2)
 -- Colon : used to show variables
-INSERT into PokemonTypes (pokemonId, typeID)
+INSERT into PokemonTypes (pokemonId, typeId)
 VALUES (:pokemonId, :type1Id);
 
 -- Delete a M:M relationship between Pokemon and Types

@@ -10,49 +10,94 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/pokemonSearchResults')
+@app.route('/pokemonSearchResults')  # need to make this html
 def pokemonSearch(pokedexNumber, pokemonSearchName):
     db_connection = connect_to_database()
     if pokedexNumber is None and pokemonSearchName is None:  # if both none
         return "No results found"
     elif pokedexNumber is None or pokemonSearchName is None:  # if one of them is none
-        if pokedexNumber is None:
+        if pokedexNumber is None:  # no entry for pokedex number
             query = "SELECT * FROM Pokemon WHERE pokemonSearchName == pokemonName"
             result = execute_query(db_connection, query).fetchall()
             if result is None:  # if still none
                 return "No results found"
             render_template ("pokemonSearchResults.html", rows = result)
-        else:
-            query = "SELECT * FROM Pokemon WHERE pokedexNumber == pokemonId and pokemonSearchName == pokemonName"
+        else:  # no entry for pokemon name
+            query = "SELECT * FROM Pokemon WHERE pokedexNumber == pokemonId"
             result = execute_query(db_connection, query).fetchall()
             if result is None:  # if still none
                 return "No results found"
-            render_template ("pokemonSearchResults.html", rows = pokemonSearchName)
+            render_template ("pokemonSearchResults.html", rows = result)
+    else:  # had inputs for both
+        query = "SELECT * FROM Pokemon WHERE pokedexNumber == pokemonId and pokemonSearchName == pokemonName"
+        result = execute_query(db_connection, query).fetchall()
+        render_template ("pokemonSearchResults.html", rows = result)
 
-@app.route('/pokemon.html', methods = ['POST', 'GET'])
+@app.route('/pokemon.html', methods = ['POST', 'GET', 'DELETE', 'PUT'])
 def pokemon():
     db_connection = connect_to_database()
-    regions = 'SELECT * FROM Regions'  #populate dropdowns later
-    types = 'SELECT * FROM Types'   # populate dropdowns later
+    regionQuery = 'SELECT * FROM Regions'  # populates dropdown menus
+    typeQuery = 'SELECT * FROM Types'   # populates dropdown menus
     if request.method == 'GET':
-        if request.form.get('searchButton'):  # if search button gets pressed, treat as get
+        if request.form.get('searchButton'):  # if search button gets pressed, redirect to search
             pokedexNumber = request.form['Pokedex Search']
             pokemonSearchName = request.form['Name Search']
             return redirect(url_for('pokemonSearchResults', pokedexNumber, pokemonSearchName))  # redirect and pass values to search result page
-        else:  # else it's just the initial render, add regions and types here with jinja later
+        else:  # else it's just the initial page render
             query = "SELECT * FROM Pokemon"
             result = execute_query(db_connection, query).fetchall()
-            return render_template("pokemon.html", rows = result)
+            regions = execute_query(db_connection, regionQuery).fetchall()
+            types = execute_query(db_connection, typeQuery).fetchall()
+            return render_template("pokemon.html", rows = result, regions = regions, types = types)
     
-    if request.method == 'POST':  # handle add new pokemon
+    if request.method == 'POST':  # handle add new pokemon and M:M with type
+        db_connection = connect_to_database()
+        newPokemonId = request.form.get("Pokedex Number")
+        pokemonName = request.form.get("Pokemon Name")
+        pokemonGender  = request.form.get("Pokemon Gender")
+        region = request.form.get("Pokemon Region")
+        type1Id = request.form.get("Type1Id")
+        type2Id = request.form.get("Type2Id")
+        query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1, pokemonTypeId2) VALUES (%s, %s, %s, %s, %s, %s)"
+        data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
+        execute_query(db_connection, query, data)  # create new row in table
+        query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
+        data = (newPokemonId, type1Id)
+        print(type1Id)
+        execute_query(db_connection, query, data)
+        print("error is past this")
+        pokemonTypeId1 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
+        data = (newPokemonId, type1Id)
+        pokemonTypeId1 = execute_query(db_connection, pokemonTypeId1, data).fetchone()  # error is here
+        print("hello world")
+        print (pokemonTypeId1)
+        query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
+        data = (newPokemonId, type2Id)
+        print(type2Id)
+        execute_query(db_connection, query, data)
+        pokemonTypeId2 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
+        data = (newPokemonId, type2Id)
+        pokemonTypeId2 = execute_query(db_connection, pokemonTypeId2, data).fetchone()
+        data = (pokemonTypeId1, pokemonTypeId2)
+        query = "UPDATE Pokemon SET pokemonType1Id = %s, pokemonType2Id = %s"
+        execute_query(db_connection, query, data)
+        return redirect(url_for("pokemon"))
+
+    if request.method == 'PUT':
         pass
+    # need update pokemon here
 
-    # query to add new pokemon
-        # query to display region dropdown
-        # query to display type 1
-        # query to display type 2
+    if request.method == 'DELETE':
+        db_connection = connect_to_database()
+        query = "DELETE FROM Pokemon WHERE pokemonId = %s;"
+        deleteId = request.form["Pokedex Number"]
+        result = execute_query(db_connection, query, deleteId)
+        return redirect(url_for('pokemon'))  # reload page
 
-    # query to delete pokemon by pokedex number
+        # query to delete pokemon by pokedex number
+
+
+
 
 
 @app.route('/pokemontypes.html')
@@ -97,4 +142,4 @@ def types():
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(port=31479, debug=False)
+    app.run(port=31277, debug=False)
