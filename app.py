@@ -39,7 +39,7 @@ def pokemon():
     regionQuery = 'SELECT * FROM Regions'  # populates dropdown menus
     typeQuery = 'SELECT * FROM Types'   # populates dropdown menus
     if request.method == 'GET':
-        if request.form.get('searchButton'):  # if search button gets pressed, redirect to search
+        if 'searchButton' in request.form:  # if search button gets pressed, redirect to search
             pokedexNumber = request.form.get('Pokedex Search')
             pokemonSearchName = request.form.get('Name Search')
             return redirect(url_for('pokemonSearchResults', pokedexNumber, pokemonSearchName))  # redirect and pass values to search result page
@@ -50,7 +50,6 @@ def pokemon():
             types = execute_query(db_connection, typeQuery).fetchall()
             return render_template("pokemon.html", rows = result, regions = regions, types = types)
     if request.method == 'POST' and "addButton" in request.form:  # handle add new pokemon and M:M with type
-        print("made it here")
         db_connection = connect_to_database()
         newPokemonId = request.form.get("Pokedex Number")
         pokemonName = request.form.get("Pokemon Name")
@@ -108,7 +107,7 @@ def pokemon():
             execute_query(db_connection, query, data)
         return redirect(url_for("pokemon"))
 
-    if request.method == 'POST' and request.form.get("deleteButton"):
+    if request.method == 'POST' and "deleteButton" in request.form:
         db_connection = connect_to_database()
         query = "DELETE FROM Pokemon WHERE pokemonId = %s;"
         deleteId = request.form.get("Pokedex Number")
