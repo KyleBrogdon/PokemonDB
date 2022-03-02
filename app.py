@@ -133,11 +133,26 @@ def regions():
     # query to add a region by name
     return render_template("regions.html")
 
-@app.route('/gyms.html')
+@app.route('/gyms.html', methods = ['GET', 'POST'])
 def gyms():
-    # query to display gyms
-
-    # query to add a gym by name
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        regionQuery = 'SELECT * FROM Regions'  # populates dropdown menus
+        typeQuery = 'SELECT * FROM Types'   # populates dropdown menus
+        query = 'SELECT * FROM Gyms'
+        result = execute_query(db_connection, query).fetchall()
+        regions = execute_query(db_connection, regionQuery).fetchall()
+        types = execute_query(db_connection, typeQuery).fetchall()
+        return render_template('gyms.html', rows = result, regions = regions, types = types)
+    if request.method == 'POST':
+        gymName = request.values.get('Add Gym')
+        leaderName = request.values.get('Add Leader')
+        regionId = request.values.get('Pokemon Region')
+        typeId = request.values.get('TypeId')
+        data = (gymName, leaderName, regionId, typeId)
+        query = 'INSERT into Gyms (gymName, leaderName, regionId, typeId) VALUES (%s, %s, %s, %s)'
+        execute_query(db_connection, query, data)
+        return redirect(url_for('gyms'))
 
     return render_template("gyms.html")
 

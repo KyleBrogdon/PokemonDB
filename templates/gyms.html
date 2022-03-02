@@ -25,24 +25,43 @@
                 </tr>
             </thead>
             <tbody>
+                {% for r in rows %}
                 <tr>
-                    <td></td>
-                    <td>Pewter City Gym</td>
-                    <td>Brock</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tr>
+                    <td>{{r.0}}</td>
+                    <td>{{r[1]}}</td>
+                    <td>{{r[2]}}</td>
+                    <td>{{r[3]}}</td>
+                    <td>{{r[4]}}</td>
+                {% endfor %}
             </tbody>
         </table>
         <br>
-    <form>
+    <form action = '' method = 'POST'>
         <fieldset>
             <legend>Add a Gym</legend>
             <label for="Add Gym">Enter Gym Name</label>
-            <input type="text" id = "Add Gym">
+            <input type="text" id = "Add Gym" name = 'Add Gym'>
             <br>
-            <button type="button">Add</button>
+            <label for="Add Leader">Enter Leader Name</label>
+            <input type="text" id = "Add Leader" name = 'Add Leader'>
+            <br>
+            <label for="Pokemon Region">Region</label>
+            <select name="Pokemon Region" id = "Pokemon Region">
+                <option disabled selected value></option>
+                {% for x in regions%}
+                <option value = "{{x[0]}}">{{x[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="Type">Primary Type</label>
+            <select name="TypeId" id = "TypeId">
+                <option disabled selected value>  </option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit" name = 'addButton' value = 'addButton'>Add</button>
         </fieldset>   
     </form>
     {% endblock %}
