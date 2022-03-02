@@ -10,28 +10,6 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/pokemonSearchResults')  # need to make this html
-def pokemonSearch(pokedexNumber, pokemonSearchName):
-    db_connection = connect_to_database()
-    if pokedexNumber is None and pokemonSearchName is None:  # if both none
-        return "No results found"
-    elif pokedexNumber is None or pokemonSearchName is None:  # if one of them is none
-        if pokedexNumber is None:  # no entry for pokedex number
-            query = "SELECT * FROM Pokemon WHERE pokemonSearchName == pokemonName"
-            result = execute_query(db_connection, query).fetchall()
-            if result is None:  # if still none
-                return "No results found"
-            render_template ("pokemonSearchResults.html", rows = result)
-        else:  # no entry for pokemon name
-            query = "SELECT * FROM Pokemon WHERE pokedexNumber == pokemonId"
-            result = execute_query(db_connection, query).fetchall()
-            if result is None:  # if still none
-                return "No results found"
-            render_template ("pokemonSearchResults.html", rows = result)
-    else:  # had inputs for both
-        query = "SELECT * FROM Pokemon WHERE pokedexNumber == pokemonId and pokemonSearchName == pokemonName"
-        result = execute_query(db_connection, query).fetchall()
-        render_template ("pokemonSearchResults.html", rows = result)
 
 @app.route('/pokemon.html', methods = ['POST', 'GET', 'DELETE', 'PUT'])
 def pokemon():
@@ -39,10 +17,20 @@ def pokemon():
     regionQuery = 'SELECT * FROM Regions'  # populates dropdown menus
     typeQuery = 'SELECT * FROM Types'   # populates dropdown menus
     if request.method == 'GET':
-        if 'searchButton' in request.form:  # if search button gets pressed, redirect to search
-            pokedexNumber = request.form.get('Pokedex Search')
-            pokemonSearchName = request.form.get('Name Search')
-            return redirect(url_for('pokemonSearchResults', pokedexNumber, pokemonSearchName))  # redirect and pass values to search result page
+        if request.values.get('searchButton') != None:  # if search button gets pressed, filter and redisplay
+            pokedexNumber = request.values.get('Pokedex Number')
+            if pokedexNumber == "":  # if form is left blank, remove filter
+                query = "SELECT * FROM Pokemon"
+                result = execute_query(db_connection, query).fetchall()
+                regions = execute_query(db_connection, regionQuery).fetchall()
+                types = execute_query(db_connection, typeQuery).fetchall()
+                return render_template("pokemon.html", rows = result, regions = regions, types = types)
+            else:  # reload and filter results
+                query = "SELECT * FROM Pokemon WHERE pokemonId = %s"
+                result = execute_query(db_connection, query, pokedexNumber)
+                regions = execute_query(db_connection, regionQuery).fetchall()
+                types = execute_query(db_connection, typeQuery).fetchall()
+            return render_template("filteredPokemon.html", rows = result, regions = regions, types = types, number = pokedexNumber)
         else:  # else it's just the initial page render
             query = "SELECT * FROM Pokemon"
             result = execute_query(db_connection, query).fetchall()

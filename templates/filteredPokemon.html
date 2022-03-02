@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block head %}
+    <a href='/'><button>Return Home</button></a>{% endblock %}
+</head>
+<body>
+    {% block body %}
+    <br>
+    <br>
+    <div>
+        <table>
+        <caption>Showing Pokemon # {{number}}</caption>
+            <thead>
+                <tr>
+                    <th>pokemonId</th>
+                    <th>pokemonName</th>
+                    <th>pokemonGender</th>
+                    <th>regionId</th>
+                    <th>pokemonTypeId 1</th>
+                    <th>pokemonTypeId 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                <tr>
+                    <td>{{r.0}}</td>
+                    <td>{{r[1]}}</td>
+                    <td>{{r[2]}}</td>
+                    <td>{{r[3]}}</td>
+                    <td>{{r[4]}}</td>
+                    <td>{{r[5]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <form action = "/pokemon.html" method="POST">
+        <fieldset>
+            <legend>Add a New Pokemon</legend>
+            <label for="Pokedex Number">Pokedex Number</label>
+            <input type="number" id = "Pokedex Number" name = "Pokedex Number">
+            <br>
+            <label for="Pokemon Name">Name</label>
+            <input type="text" id = "Pokemon Name" name = "Pokemon Name">
+            <br>
+            <label for="Pokemon Gender">Gender</label>
+            <select name="Pokemon Gender" id = "Pokemon Gender" name = "Pokemon Gender">
+                <option disabled selected value>  </option>
+                <option value = "Male">Male</option>
+                <option value = "Female">Female</option>
+                <option value = "Unknown">Unknown</option>
+            </select>
+            <br>
+            <label for="Pokemon Region">Region</label>
+            <select name="Pokemon Region" id = "Pokemon Region">
+                <option disabled selected value></option>
+                {% for x in regions%}
+                <option value = "{{x[0]}}">{{x[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="Type 1">Type 1</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
+            <select name="Type1Id" id = "Type1Id">
+                <option disabled selected value>  </option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="Type 2">Type 2</label>
+            <select name="Type2Id" id = "Type2Id">
+                <option disabled selected value>  </option>
+                <option value = "None">None</option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit" name = "addButton" value = "addButton">Add</button>
+        </fieldset>
+    </form>
+    <form action = "" method = 'POST'>
+        <fieldset>
+            <legend>Update an Existing Pokemon</legend>
+            <label for="Current Pokedex Number">Current Pokedex Number</label>
+            <input type="number" id = "Current Pokedex Number" name = "Current Pokedex Number">
+            <br>
+            <label for="New Pokedex Number">New Pokedex Number (If no change, enter current pokedex number)</label>
+            <input type="number" id = "New Pokedex Number" name = "New Pokedex Number">
+            <br>
+            <label for="Pokemon Name">Name</label>
+            <input type="text" id = "Pokemon Name" name = "Pokemon Name">
+            <br>
+            <label for="Pokemon Gender">Gender</label>
+            <select name="Pokemon Gender" id = "Pokemon Gender" name ="Pokemon Gender">
+                <option disabled selected value>  </option>
+                <option value = "Male">Male</option>
+                <option value = "Female">Female</option>
+                <option value = "Unknown">Unknown</option>
+            </select>
+            <br>
+            <label for="Pokemon Region">Region</label>
+            <select name="Pokemon Region" id = "Pokemon Region" name = "Pokemon Region">
+                <option disabled selected value></option>
+                {% for x in regions%}
+                <option value = "{{x[0]}}">{{x[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="Type 1">Type 1</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
+            <select name="Type1Id" id = "Type1Id">
+                <option disabled selected value>  </option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label for="Type 2">Type 2</label>
+            <select name="Type2Id" id = "Type2Id">
+                <option disabled selected value>  </option>
+                <option value = "None">None</option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit" name = "updateButton" value = "update">Update</button>
+        </fieldset>
+    </form>
+    <form action = "" method = 'GET'>
+        <fieldset>
+            <legend>Search for a Pokemon</legend>
+            <label for="Pokedex Search">Search by Pokedex Number</label>
+            <input type="number" id = "Pokedex Number" name = "Pokedex Number">
+            <br>
+            <button name = 'searchButton' type="submit" value = "searchButton">Search</button>
+        </fieldset>
+    </form>
+    <form action = "/pokemon.html" method = 'POST'>
+        <fieldset>
+            <legend>Delete an Existing Pokemon</legend>
+            <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
+            <input type="number" id = "Pokedex Number" name = "Pokedex Number">
+            <br>
+            <button name = 'deleteButton' type="submit" value = "delete">Delete</button>
+        </fieldset>
+    <form>
+    {% endblock %}
+</body>
+</html>
