@@ -126,12 +126,19 @@ def pokemontypes():
             execute_query(db_connection, query, pokemonTypeId)
             return redirect(url_for('pokemontypes'))
 
-@app.route('/regions.html')
+@app.route('/regions.html', methods = ['Get', 'POST'])
 def regions():
-    # query to display regions
-
-    # query to add a region by name
-    return render_template("regions.html")
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        query = 'SELECT * FROM Regions'
+        result = execute_query(db_connection, query).fetchall()
+        return render_template('regions.html', rows = result)
+    if request.method == 'POST':
+        newType = request.values.get('Add Region')
+        data = (newType,)
+        query = 'INSERT into Regions (regionName) VALUES (%s)'
+        execute_query(db_connection, query, data)
+        return redirect(url_for('regions'))
 
 @app.route('/gyms.html', methods = ['GET', 'POST'])
 def gyms():

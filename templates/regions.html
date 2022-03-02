@@ -22,48 +22,22 @@
                 </tr>
             </thead>
             <tbody style = "text-align: center">
-                <tr>
-                    <td></td>
-                    <td>Kanto</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Johto</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Hoenn</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Sinnoh</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Unova</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Kalos</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Alola</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Galar</td>
-                </tr>
-            </tbody>
+                <<tbody>
+                    {% for r in rows %}
+                    <tr>
+                        <td>{{r.0}}</td>
+                        <td>{{r[1]}}</td>
+                    {% endfor %}
+                </tbody>
         </table>
         <br>
-    <form>
+    <form action ='' method = 'POST'>
         <fieldset>
             <legend>Add a Region</legend>
             <label for="Add Region">Region Name</label>
-            <input type="text" id = "Add Region">
+            <input type="text" id = "Add Region" name = 'Add Region'>
             <br>
-            <button type="button">Add</button>
+            <button type="submit">Add</button>
         </fieldset>  
     </form>
     {% endblock %}
