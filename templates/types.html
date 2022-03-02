@@ -23,84 +23,21 @@
                 </tr>
             </thead>
             <tbody>
+                {% for r in rows %}
                 <tr>
-                    <td></td>
-                    <td>Normal</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Fire</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Grass</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Electric</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Ice</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Fighting</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Poison</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Ground</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Flying</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Psychic</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Bug</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Rock</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Ghost</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Dark</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Dragon</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Steel</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>Fairy</td>
-                </tr>
+                    <td>{{r.0}}</td>
+                    <td>{{r[1]}}</td>
+                {% endfor %}
             </tbody>
         </table>
         <br>
-<form>
+<form action = '' method = 'POST'>
     <fieldset>
         <legend>Add a Type</legend>
-        <label for="Add Region">Type Name</label>
-        <input type="text" id = "Add Region">
+        <label for="Add Type">Type Name</label>
+        <input type="text" id = "Add Type" name = 'please'>
         <br>
-        <button type="button">Add</button>
+        <button type="submit" name = 'addNew' value = 'addNew'>Add</button>
     </fieldset>
 </form>
 {% endblock %}

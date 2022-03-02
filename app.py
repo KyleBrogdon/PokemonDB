@@ -141,13 +141,24 @@ def gyms():
 
     return render_template("gyms.html")
 
-@app.route('/types.html')
+@app.route('/types.html', methods = ['GET', 'POST'])
 def types():
-    # query to display types
-
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        query = 'SELECT * FROM Types'
+        result = execute_query(db_connection, query).fetchall()
+        return render_template('types.html', rows = result)
+    if request.method == 'POST':
+        print(request.form.get('please'))
+        newType = request.values.get('please')
+        print(newType)
+        data = (newType,)
+        query = 'INSERT into Types (typeName) VALUES (%s)'
+        execute_query(db_connection, query, data)
+        return redirect(url_for('types'))
     # query to add a type by type name
 
-    return render_template("types.html")
+    #return render_template("types.html")
 
 
 # Listener
