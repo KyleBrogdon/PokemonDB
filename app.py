@@ -63,23 +63,18 @@ def pokemon():
         execute_query(db_connection, query, data)  # create new row in table
         query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
         data = (newPokemonId, type1Id)
-        print(type1Id)
         execute_query(db_connection, query, data)
-        print("error is past this")
         pokemonTypeId1 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
         data = (newPokemonId, type1Id)
         pokemonTypeId1 = execute_query(db_connection, pokemonTypeId1, data).fetchone()  # error is here
-        print("hello world")
-        print (pokemonTypeId1)
         query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
         data = (newPokemonId, type2Id)
-        print(type2Id)
         execute_query(db_connection, query, data)
         pokemonTypeId2 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
         data = (newPokemonId, type2Id)
         pokemonTypeId2 = execute_query(db_connection, pokemonTypeId2, data).fetchone()
-        data = (pokemonTypeId1, pokemonTypeId2)
-        query = "UPDATE Pokemon SET pokemonType1Id = %s, pokemonType2Id = %s"
+        data = (pokemonTypeId1, pokemonTypeId2, newPokemonId)
+        query = "UPDATE Pokemon SET pokemonTypeId1 = %s, pokemonTypeId2 = %s WHERE pokemonId = %s "
         execute_query(db_connection, query, data)
         return redirect(url_for("pokemon"))
 
