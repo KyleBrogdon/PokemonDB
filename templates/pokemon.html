@@ -127,7 +127,7 @@
                 {% endfor %}
             </select>
             <br>
-            <button type="button">Update</button>
+            <button type="button" name = "updateButton" value = "update">Update</button>
         </fieldset>
     </form>
     <form action = "" method = 'GET'>
@@ -142,14 +142,13 @@
             <button name = 'searchButton' type="button">Search</button>
         </fieldset>
     </form>
-
-    <form action = "" method = 'DELETE'>
+    <form action = "/pokemon.html" method = 'POST'>
         <fieldset>
             <legend>Delete an Existing Pokemon</legend>
             <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
-            <input type="number" id = "Pokedex Number">
+            <input type="number" id = "Pokedex Number" name = "Pokedex Number">
             <br>
-            <button name = 'deleteButton' type="button">Delete</button>
+            <button name = 'deleteButton' type="submit" value = "delete">Delete</button>
         </fieldset>
     <form>
     {% endblock %}

@@ -213,9 +213,7 @@ ALTER TABLE `Gyms`
 -- Constraints for table `Pokemon`
 --
 ALTER TABLE `Pokemon`
-  ADD CONSTRAINT `pokemon_fk_1` FOREIGN KEY (`regionId`) REFERENCES `Regions` (`regionId`),
-  ADD CONSTRAINT `pokemon_fk_2` FOREIGN KEY (`pokemonTypeId1`) REFERENCES `PokemonTypes` (`pokemonTypeId`),
-  ADD CONSTRAINT `pokemon_fk_3` FOREIGN KEY (`pokemonTypeId2`) REFERENCES `PokemonTypes` (`pokemonTypeId`);
+  ADD CONSTRAINT `pokemon_fk_1` FOREIGN KEY (`regionId`) REFERENCES `Regions` (`regionId`);
 
 --
 -- Constraints for table `PokemonTypes`
