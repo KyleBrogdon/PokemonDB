@@ -58,23 +58,32 @@ def pokemon():
         region = request.form.get("Pokemon Region")
         type1Id = request.form.get("Type1Id")
         type2Id = request.form.get("Type2Id")
-        query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1, pokemonTypeId2) VALUES (%s, %s, %s, %s, %s, %s)"
-        data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
+        if type2Id is not None:
+            query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1, pokemonTypeId2) VALUES (%s, %s, %s, %s, %s, %s)"
+            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
+        else:
+            query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1) VALUES (%s, %s, %s, %s, %s)"
+            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id)
         execute_query(db_connection, query, data)  # create new row in table
         query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
         data = (newPokemonId, type1Id)
         execute_query(db_connection, query, data)
         pokemonTypeId1 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
         data = (newPokemonId, type1Id)
-        pokemonTypeId1 = execute_query(db_connection, pokemonTypeId1, data).fetchone()  # error is here
+        pokemonTypeId1 = execute_query(db_connection, pokemonTypeId1, data).fetchone() 
         query = "INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)"
-        data = (newPokemonId, type2Id)
-        execute_query(db_connection, query, data)
-        pokemonTypeId2 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
-        data = (newPokemonId, type2Id)
-        pokemonTypeId2 = execute_query(db_connection, pokemonTypeId2, data).fetchone()
-        data = (pokemonTypeId1, pokemonTypeId2, newPokemonId)
-        query = "UPDATE Pokemon SET pokemonTypeId1 = %s, pokemonTypeId2 = %s WHERE pokemonId = %s "
+        if type2Id is not None:
+            data = (newPokemonId, type2Id)
+            execute_query(db_connection, query, data)
+            pokemonTypeId2 = "SELECT pokemonTypeId FROM PokemonTypes WHERE pokemonId = %s and typeId = %s"
+            data = (newPokemonId, type2Id)
+            pokemonTypeId2 = execute_query(db_connection, pokemonTypeId2, data).fetchone()
+            data = (pokemonTypeId1, pokemonTypeId2, newPokemonId)
+        if type2Id is not None:
+            query = "UPDATE Pokemon SET pokemonTypeId1 = %s, pokemonTypeId2 = %s WHERE pokemonId = %s "
+        else:
+            data = (pokemonTypeId1, newPokemonId)
+            query = "UPDATE Pokemon SET pokemonTypeId1 = %s WHERE pokemonId = %s "
         execute_query(db_connection, query, data)
         return redirect(url_for("pokemon"))
 
