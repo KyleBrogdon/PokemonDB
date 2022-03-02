@@ -23,55 +23,42 @@
                 </tr>
             </thead>
             <tbody>
+                {% for r in rows %}
                 <tr>
-                    <td>00103</td>
-                    <td>001</td>
-                    <td>03</td>
+                    <td>{{r.0}}</td>
+                    <td>{{r[1]}}</td>
+                    <td>{{r[2]}}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
         <br>
     </div>
-    <form>
+    <form action = 'pokemontypes.html' method = 'POST'>
         <fieldset>
             <legend>Add a new PokemonType Relationship</legend>
             <label for="pokemonId">pokemonId</label>
-            <input type="number" id = "Pokedex Number">
+            <input type="number" id = "Pokedex Number" name = "Pokedex Number">
             <br>
             <label for="Type">Type</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
-            <select name="Type" id = "Type">
+            <select name="TypeId" id = "TypeId">
                 <option disabled selected value>  </option>
-                <option value = "Normal">Normal</option>
-                <option value = "Fire">Fire</option>
-                <option value = "Water">Water</option>
-                <option value = "Grass">Grass</option>
-                <option value = "Electric">Electric</option>
-                <option value = "Ice">Ice</option>
-                <option value = "Fighting">Fighting</option>
-                <option value = "Poison">Poison</option>
-                <option value = "Ground">Ground</option>
-                <option value = "Flying">Flying</option>
-                <option value = "Psychic">Psychic</option>
-                <option value = "Bug">Bug</option>
-                <option value = "Rock">Rock</option>
-                <option value = "Ghost">Ghost</option>
-                <option value = "Dark">Dark</option>
-                <option value = "Dragon">Dragon</option>
-                <option value = "Steel">Steel</option>
-                <option value = "Fairy">Fairy</option>
+                {% for y in types%}
+                <option value = "{{y[0]}}">{{y[1]}}</option>
+                {% endfor %}
             </select>
             <br>
             <br>
-            <button type="button">Add</button>
+            <button type="submit" name = "addNew" value = "addNew">Add</button>
         </fieldset>
     </form>
-    <form>
+    <form action = 'pokemontypes.html' method = 'POST'>
         <fieldset>
             <legend>Delete an existing PokemonType Relationship</legend>
             <label for="PokemonType Delete">Enter the pokemonTypeId of the relationship you wish to delete</label>
-            <input type="number" id = "pokemonTypeId">
+            <input type="number" id = "pokemonTypeId" name = "pokemonTypeId">
             <br>
-            <button type="button">Delete</button>
+            <button type="submit" name = "delete" value = "delete">Delete</button>
         </fieldset>
     <form>
     {% endblock %}

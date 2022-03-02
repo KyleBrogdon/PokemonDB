@@ -27,7 +27,7 @@ def pokemon():
                 return render_template("pokemon.html", rows = result, regions = regions, types = types)
             else:  # reload and filter results
                 query = "SELECT * FROM Pokemon WHERE pokemonId = %s"
-                result = execute_query(db_connection, query, pokedexNumber)
+                result = execute_query(db_connection, query, pokedexNumber).fetchone()
                 regions = execute_query(db_connection, regionQuery).fetchall()
                 types = execute_query(db_connection, typeQuery).fetchall()
             return render_template("filteredPokemon.html", rows = result, regions = regions, types = types, number = pokedexNumber)
@@ -102,29 +102,35 @@ def pokemon():
         result = execute_query(db_connection, query, deleteId)
         return redirect(url_for('pokemon'))  # reload page
 
-        # query to delete pokemon by pokedex number
 
-
-
-
-
-@app.route('/pokemontypes.html')
+@app.route('/pokemontypes.html', methods = ['GET', 'POST'])
 def pokemontypes():
-    # query to display pokemonTypes
-        # query to display types dropdown
-    
-    # query to delete a pokemonTypeID relation by pokemonTypeID number
-
-    return render_template("pokemontypes.html")
+    db_connection = connect_to_database()
+    if request.method == "GET":
+        typeQuery = 'SELECT * FROM Types'
+        types = execute_query(db_connection, typeQuery).fetchall()
+        query = 'SELECT * FROM PokemonTypes'
+        result = execute_query(db_connection, query).fetchall()
+        return render_template('pokemontypes.html', rows = result, types = types)
+    if request.method == "POST":
+        if request.values.get("addNew") != None:
+            pokemonId = request.values.get("Pokedex Number")
+            type = request.values.get("TypeId")
+            query = 'INSERT into PokemonTypes (pokemonId, typeId) VALUES (%s, %s)'
+            data = (pokemonId, type)
+            execute_query(db_connection, query, data)
+            return redirect(url_for('pokemontypes'))
+        else:  # must be delete
+            pokemonTypeId = request.values.get("pokemonTypeId")
+            query = 'DELETE FROM PokemonTypes WHERE pokemonTypeId = %s'
+            execute_query(db_connection, query, pokemonTypeId)
+            return redirect(url_for('pokemontypes'))
 
 @app.route('/regions.html')
 def regions():
     # query to display regions
 
     # query to add a region by name
-
-    # query to show gyms by region (use regions dropdown, enter gym name)
-        # query to display regions dropdown
     return render_template("regions.html")
 
 @app.route('/gyms.html')
@@ -133,7 +139,6 @@ def gyms():
 
     # query to add a gym by name
 
-    # query to search a gym by name
     return render_template("gyms.html")
 
 @app.route('/types.html')
@@ -141,8 +146,7 @@ def types():
     # query to display types
 
     # query to add a type by type name
-    # query to search by pokemon type
-        #query to display type drop down
+
     return render_template("types.html")
 
 
