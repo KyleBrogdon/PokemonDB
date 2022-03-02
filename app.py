@@ -39,9 +39,9 @@ def pokemon():
     regionQuery = 'SELECT * FROM Regions'  # populates dropdown menus
     typeQuery = 'SELECT * FROM Types'   # populates dropdown menus
     if request.method == 'GET':
-        if request.form.get('searchButton') != "None":  # if search button gets pressed, redirect to search
-            pokedexNumber = request.form['Pokedex Search']
-            pokemonSearchName = request.form['Name Search']
+        if request.form.get('searchButton'):  # if search button gets pressed, redirect to search
+            pokedexNumber = request.form.get('Pokedex Search')
+            pokemonSearchName = request.form.get('Name Search')
             return redirect(url_for('pokemonSearchResults', pokedexNumber, pokemonSearchName))  # redirect and pass values to search result page
         else:  # else it's just the initial page render
             query = "SELECT * FROM Pokemon"
@@ -49,8 +49,8 @@ def pokemon():
             regions = execute_query(db_connection, regionQuery).fetchall()
             types = execute_query(db_connection, typeQuery).fetchall()
             return render_template("pokemon.html", rows = result, regions = regions, types = types)
-    
-    if request.method == 'POST' and request.form.get("addButton") =! "None":  # handle add new pokemon and M:M with type
+    if request.method == 'POST' and "addButton" in request.form:  # handle add new pokemon and M:M with type
+        print("made it here")
         db_connection = connect_to_database()
         newPokemonId = request.form.get("Pokedex Number")
         pokemonName = request.form.get("Pokemon Name")
@@ -58,6 +58,7 @@ def pokemon():
         region = request.form.get("Pokemon Region")
         type1Id = request.form.get("Type1Id")
         type2Id = request.form.get("Type2Id")
+        print (type2Id == "None")
         if type2Id == "None":
             query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1, pokemonTypeId2) VALUES (%s, %s, %s, %s, %s, %s)"
             data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
@@ -87,24 +88,27 @@ def pokemon():
         execute_query(db_connection, query, data)
         return redirect(url_for("pokemon"))
 
-    if request.method == 'POST' and request.form.get("updateButton") =! "None":
+    if request.method == 'POST' and "updateButton" in request.form:
         db_connection = connect_to_database()
-        newPokemonId = request.form.get("Pokedex Number")
+        currentPokemonId = request.form.get("Current Pokedex Number")
+        newPokemonId = request.form.get("New Pokedex Number")
         pokemonName = request.form.get("Pokemon Name")
         pokemonGender  = request.form.get("Pokemon Gender")
         region = request.form.get("Pokemon Region")
         type1Id = request.form.get("Type1Id")
         type2Id = request.form.get("Type2Id")
+        print(type2Id)
         if type2Id != "None":
-            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
-            query = "UPDATE Pokemon SET pokemonId = %s, pokemonName = %s, pokemonGender = %s, region = %s, pokemonTypeId1 = %s, pokemonTypeId2 = %s"
+            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id, currentPokemonId)
+            query = "UPDATE Pokemon SET pokemonId = %s, pokemonName = %s, pokemonGender = %s, regionId = %s, pokemonTypeId1 = %s, pokemonTypeId2 = %s WHERE pokemonId = %s"
             execute_query(db_connection, query, data)
         else:
-            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id)
-            query = "UPDATE Pokemon SET pokemonId = %s, pokemonName = %s, pokemonGender = %s, region = %s, pokemonTypeId1 = %s"
+            data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, currentPokemonId)
+            query = "UPDATE Pokemon SET pokemonId = %s, pokemonName = %s, pokemonGender = %s, regionId = %s, pokemonTypeId1 = %s WHERE pokemonId = %s"
             execute_query(db_connection, query, data)
+        return redirect(url_for("pokemon"))
 
-    if request.method == 'POST' and request.form.get("deleteButton") != "None":
+    if request.method == 'POST' and request.form.get("deleteButton"):
         db_connection = connect_to_database()
         query = "DELETE FROM Pokemon WHERE pokemonId = %s;"
         deleteId = request.form.get("Pokedex Number")
@@ -159,4 +163,4 @@ def types():
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(port=31277, debug=False)
+    app.run(port=31277, debug=True)

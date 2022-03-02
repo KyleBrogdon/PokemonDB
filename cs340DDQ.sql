@@ -220,7 +220,8 @@ ALTER TABLE `Pokemon`
 --
 ALTER TABLE `PokemonTypes`
   ADD CONSTRAINT `pokemonTypes_fk_1` FOREIGN KEY (`pokemonId`) REFERENCES `Pokemon` (`pokemonId`),
-  ADD CONSTRAINT `pokemonTypes_fk_2` FOREIGN KEY (`typeId`) REFERENCES `Types` (`typeId`);
+  ADD CONSTRAINT `pokemonTypes_fk_2` FOREIGN KEY (`typeId`) REFERENCES `Types` (`typeId`)
+  ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

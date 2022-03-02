@@ -82,20 +82,23 @@
                 {% endfor %}
             </select>
             <br>
-            <button type="submit" name = "addButton">Add</button>
+            <button type="submit" name = "addButton" value = "addButton">Add</button>
         </fieldset>
     </form>
-    <form action = "" method = 'PUT'>
+    <form action = "" method = 'POST'>
         <fieldset>
             <legend>Update an Existing Pokemon</legend>
-            <label for="Pokedex Number">Pokedex Number</label>
-            <input type="number" id = "Pokedex Number">
+            <label for="Current Pokedex Number">Current Pokedex Number</label>
+            <input type="number" id = "Current Pokedex Number" name = "Current Pokedex Number">
+            <br>
+            <label for="New Pokedex Number">New Pokedex Number (If no change, enter current pokedex number)</label>
+            <input type="number" id = "New Pokedex Number" name = "New Pokedex Number">
             <br>
             <label for="Pokemon Name">Name</label>
-            <input type="text" id = "Pokemon Name">
+            <input type="text" id = "Pokemon Name" name = "Pokemon Name">
             <br>
             <label for="Pokemon Gender">Gender</label>
-            <select name="Pokemon Gender" id = "Pokemon Gender">
+            <select name="Pokemon Gender" id = "Pokemon Gender" name ="Pokemon Gender">
                 <option disabled selected value>  </option>
                 <option value = "Male">Male</option>
                 <option value = "Female">Female</option>
@@ -103,7 +106,7 @@
             </select>
             <br>
             <label for="Pokemon Region">Region</label>
-            <select name="Pokemon Region" id = "Pokemon Region">
+            <select name="Pokemon Region" id = "Pokemon Region" name = "Pokemon Region">
                 <option disabled selected value></option>
                 {% for x in regions%}
                 <option value = "{{x[0]}}">{{x[1]}}</option>
@@ -111,7 +114,7 @@
             </select>
             <br>
             <label for="Type 1">Type 1</label>   <!-- code citation, blank default option https://stackoverflow.com/questions/8605516/default-select-option-as-blank -->
-            <select name="Type 1" id = "Type1Id">
+            <select name="Type1Id" id = "Type1Id">
                 <option disabled selected value>  </option>
                 {% for y in types%}
                 <option value = "{{y[0]}}">{{y[1]}}</option>
@@ -119,7 +122,7 @@
             </select>
             <br>
             <label for="Type 2">Type 2</label>
-            <select name="Type 2" id = "Type2Id">
+            <select name="Type2Id" id = "Type2Id">
                 <option disabled selected value>  </option>
                 <option value = "None">None</option>
                 {% for y in types%}
@@ -127,7 +130,7 @@
                 {% endfor %}
             </select>
             <br>
-            <button type="button" name = "updateButton" value = "update">Update</button>
+            <button type="submit" name = "updateButton" value = "update">Update</button>
         </fieldset>
     </form>
     <form action = "" method = 'GET'>
@@ -139,7 +142,7 @@
             <label for="Name Search">Search by Pokemon Name</label>
             <input type="text" id = "Name Search">
             <br>
-            <button name = 'searchButton' type="button">Search</button>
+            <button name = 'searchButton' type="submit" value = "searchButton">Search</button>
         </fieldset>
     </form>
     <form action = "/pokemon.html" method = 'POST'>
