@@ -44,9 +44,13 @@ def pokemon():
         pokemonGender  = request.form.get("Pokemon Gender")
         region = request.form.get("Pokemon Region")
         type1Id = request.form.get("Type1Id")
-        type2Id = request.form.get("Type2Id")
+        type2Id = request.values.get("Type2Id")
+        print(type2Id)
         print (type2Id == "None")
+        if type2Id is None:
+            type2Id = "None"
         if type2Id == "None":
+            print ("we are here")
             query = "Insert into Pokemon (pokemonId, pokemonName, pokemonGender, regionId, pokemonTypeId1, pokemonTypeId2) VALUES (%s, %s, %s, %s, %s, %s)"
             data = (newPokemonId, pokemonName, pokemonGender, region, type1Id, type2Id)
         else:
@@ -67,7 +71,6 @@ def pokemon():
             data = (newPokemonId, type2Id)
             pokemonTypeId2 = execute_query(db_connection, pokemonTypeId2, data).fetchone()
             data = (pokemonTypeId1, pokemonTypeId2, newPokemonId)
-        if type2Id != "None":
             query = "UPDATE Pokemon SET pokemonTypeId1 = %s, pokemonTypeId2 = %s WHERE pokemonId = %s "
         else:
             data = (pokemonTypeId1, newPokemonId)
