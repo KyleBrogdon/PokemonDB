@@ -33,7 +33,7 @@ def pokemon():
                 result = execute_query(db_connection, query, pokedexNumber).fetchone()
                 regions = execute_query(db_connection, regionQuery).fetchall()
                 types = execute_query(db_connection, typeQuery).fetchall()
-            return render_template("filteredPokemon.html", rows = result, regions = regions, types = types, number = pokedexNumber)
+                return render_template("filteredPokemon.html", rows = result, regions = regions, types = types, number = pokedexNumber)
         else:  # else it's just the initial page render
             query = "SELECT * FROM Pokemon"
             result = execute_query(db_connection, query).fetchall()
@@ -184,5 +184,5 @@ def types():
 ##### Listener #####
 if __name__ == "__main__":
 
-    #Start the app on port 3000, it will be different once hosted
-    app.run(port=31277, debug=True)
+    #Start the app on port 31278
+    app.run(port=31278, debug=True)
