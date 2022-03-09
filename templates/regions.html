@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang = "en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    {% block head %}
-    <a href='/'><button>Return Home</button></a>{% endblock %}
-</head>
-<br>
-<br>
-<body>
-    {% block body %}
+{% extends 'base.html' %}
+
+    {% block content %}
     <div>
         <table style = "width: 30%">
             <caption>Regions</caption>
@@ -22,7 +11,7 @@
                 </tr>
             </thead>
             <tbody style = "text-align: center">
-                <<tbody>
+                <tbody>
                     {% for r in rows %}
                     <tr>
                         <td>{{r.0}}</td>
@@ -40,6 +29,4 @@
             <button type="submit">Add</button>
         </fieldset>  
     </form>
-    {% endblock %}
-</body>
-</html>
+{% endblock %}
