@@ -31,8 +31,8 @@
     </div>
     <form action = "/pokemon.html" method="POST">
         <fieldset>
-            <legend>Add a New Pokemon</legend>
-            <label for="Pokedex Number">Pokedex Number</label>
+            <legend>Add a New Pokemon <h6>(All fields required)</h6></legend>
+            <label for="Pokedex Number">Pokemon ID</label>
             <input type="number" id = "Pokedex Number" name = "Pokedex Number">
             <br>
             <label for="Pokemon Name">Name</label>
@@ -73,14 +73,15 @@
             <br>
             <button type="submit" name = "addButton" value = "addButton">Add</button>
         </fieldset>
+        <br/>
     </form>
     <form action = "" method = 'POST'>
         <fieldset>
-            <legend>Update an Existing Pokemon</legend>
-            <label for="Current Pokedex Number">Current Pokedex Number</label>
+            <legend>Update an Existing Pokemon <h6>(All fields required)</h6></legend>
+            <label for="Current Pokedex Number">Current Pokemon ID</label>
             <input type="number" id = "Current Pokedex Number" name = "Current Pokedex Number">
             <br>
-            <label for="New Pokedex Number">New Pokedex Number (If no change, enter current pokedex number)</label>
+            <label for="New Pokedex Number">New Pokemon ID (If no change, enter current Pokemon ID)</label>
             <input type="number" id = "New Pokedex Number" name = "New Pokedex Number">
             <br>
             <label for="Pokemon Name">Name</label>
@@ -126,7 +127,7 @@
     <form action = "" method = 'GET'>
         <fieldset>
             <legend>Search for a Pokemon</legend>
-            <label for="Pokedex Search">Search by Pokedex Number</label>
+            <label for="Pokedex Search">Search by Pokemon ID</label>
             <input type="number" id = "Pokedex Number" name = "Pokedex Number">
             <br>
             <button name = 'searchButton' type="submit" value = "searchButton">Search</button>
@@ -137,7 +138,7 @@
     <form action = "/pokemon.html" method = 'POST'>
         <fieldset>
             <legend>Delete an Existing Pokemon</legend>
-            <label for="Pokemon Delete">Enter the Pokedex number of the Pokemon you wish to delete</label>
+            <label for="Pokemon Delete">Enter the Pokemon ID of the Pokemon you wish to delete</label>
             <input type="number" id = "Pokedex Number" name = "Pokedex Number">
             <br>
             <button name = 'deleteButton' type="submit" value = "delete">Delete</button>
