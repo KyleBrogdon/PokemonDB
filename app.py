@@ -30,7 +30,8 @@ def pokemon():
                 return render_template("pokemon.html", rows = result, regions = regions, types = types)
             else:  # reload and filter results
                 query = "SELECT * FROM Pokemon WHERE pokemonId = %s"
-                result = execute_query(db_connection, query, pokedexNumber).fetchone()
+                data = (pokedexNumber, )
+                result = execute_query(db_connection, query, data).fetchall()
                 regions = execute_query(db_connection, regionQuery).fetchall()
                 types = execute_query(db_connection, typeQuery).fetchall()
                 return render_template("filteredPokemon.html", rows = result, regions = regions, types = types, number = pokedexNumber)
@@ -103,7 +104,8 @@ def pokemon():
         db_connection = connect_to_database()
         query = "DELETE FROM Pokemon WHERE pokemonId = %s;"
         deleteId = request.form.get("Pokedex Number")
-        result = execute_query(db_connection, query, deleteId)  # delete from db
+        data = (deleteId, )
+        result = execute_query(db_connection, query, data)  # delete from db
         return redirect(url_for('pokemon'))  # reload page
 
 # Facilitates many to many relationship betweeen Pokemon and Types
@@ -184,5 +186,5 @@ def types():
 ##### Listener #####
 if __name__ == "__main__":
 
-    #Start the app on port 31278
-    app.run(port=31278, debug=True)
+    #Start the app on port 31290
+    app.run(port=31290, debug=True)
