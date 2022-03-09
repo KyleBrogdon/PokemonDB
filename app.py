@@ -140,11 +140,14 @@ def regions():
         result = execute_query(db_connection, query).fetchall()
         return render_template('regions.html', rows = result)
     if request.method == 'POST':  # must be add region
-        newType = request.values.get('Add Region')
-        data = (newType,)
-        query = 'INSERT into Regions (regionName) VALUES (%s)'
-        execute_query(db_connection, query, data)
-        return redirect(url_for('regions'))
+        newRegion = request.values.get('Add Region')
+        if newRegion == "":
+            return redirect(url_for('regions'))
+        else:
+            data = (newRegion,)
+            query = 'INSERT into Regions (regionName) VALUES (%s)'
+            execute_query(db_connection, query, data)
+            return redirect(url_for('regions'))
 
 @app.route('/gyms.html', methods = ['GET', 'POST'])
 def gyms():
@@ -160,8 +163,8 @@ def gyms():
     if request.method == 'POST':  # add new gym
         gymName = request.values.get('Add Gym')
         leaderName = request.values.get('Add Leader')
-        regionId = request.values.get('Pokemon Region')
-        typeId = request.values.get('TypeId')
+        regionId = request.values.get('Pokemon Region')  #1:M relationship
+        typeId = request.values.get('TypeId')  # #1:M relationship
         data = (gymName, leaderName, regionId, typeId)
         query = 'INSERT into Gyms (gymName, leaderName, regionId, typeId) VALUES (%s, %s, %s, %s)'
         execute_query(db_connection, query, data)
@@ -178,10 +181,13 @@ def types():
         return render_template('types.html', rows = result)
     if request.method == 'POST':  # add new type
         newType = request.values.get('please')
-        data = (newType,)
-        query = 'INSERT into Types (typeName) VALUES (%s)'
-        execute_query(db_connection, query, data)
-        return redirect(url_for('types'))
+        if newType == "":
+            return redirect(url_for('types'))
+        else:
+            data = (newType,)
+            query = 'INSERT into Types (typeName) VALUES (%s)'
+            execute_query(db_connection, query, data)
+            return redirect(url_for('types'))
 
 ##### Listener #####
 if __name__ == "__main__":
